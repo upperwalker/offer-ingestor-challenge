@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { ComposedOfferConverter, IOfferConverter } from '../converters/composed-offer-converter';
-import { IOfferProviderClient } from '../../external-providers/offer-provider.client';
+import { IOfferProviderClient } from '../../external-providers/offer/offer-provider.client';
 import { OfferType } from '../offer-type.enum';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IOffer, Offer } from '../entity/offer.entity';
@@ -10,7 +10,6 @@ export interface IIngestOffersUseCase {
   execute(): Promise<void>;
 }
 
-@Injectable()
 export class IngestOffersUseCase {
   constructor(
     private readonly offerProviderClients: Record<OfferType, IOfferProviderClient>,

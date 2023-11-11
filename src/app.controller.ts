@@ -1,12 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Inject, Post } from '@nestjs/common';
+import { IIngestOffersUseCase } from './offer/use-cases/ingest-offers-use-case';
+import { ingestOffersUseCaseToken } from './offer/offer.di';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(@Inject(ingestOffersUseCaseToken) private readonly ingestOffersUseCase: IIngestOffersUseCase) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  /**
+   * @todo for demo purposes only
+   * consider using nest command module to process job recurrently
+   */
+  @Post()
+  async ingestOffers(): Promise<void> {
+    await this.ingestOffersUseCase.execute();
   }
 }
