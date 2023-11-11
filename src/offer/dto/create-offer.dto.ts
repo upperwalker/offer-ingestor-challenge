@@ -46,10 +46,6 @@ export class CreateOfferDto implements ICreateOfferDto {
   isIos: number;
 
   @IsNotEmpty()
-  @IsInt()
-  @Min(0)
-  @Max(1)
-  @IsNotEmpty()
   @IsString()
   @MaxLength(256)
   offerUrlTemplate: string;
@@ -59,6 +55,6 @@ export class CreateOfferDto implements ICreateOfferDto {
   providerName?: OfferTypeEnum;
 
   @IsOptional()
-  @IsString()
+  @IsString() // could be uuid, then consider using IsUUID()
   externalOfferId?: string;
 }
