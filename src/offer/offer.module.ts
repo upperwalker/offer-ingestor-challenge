@@ -10,6 +10,8 @@ import { OfferProviderOneClient } from '../external-providers/offer/offer-provid
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 import { Offer } from './entity/offer.entity';
 import { OfferProviderTwoClient } from '../external-providers/offer/offer-provider-two/offer-provider-two.client';
+import { loggerToken } from '../core/logger/logger.di';
+import { LoggerModule } from '../core/logger/logger.module';
 
 const offerConverterProvider: FactoryProvider<IOfferConverter> = {
   provide: offerConverterToken,
@@ -24,18 +26,18 @@ const offerConverterProvider: FactoryProvider<IOfferConverter> = {
 
 const ingestOffersUseCaseProvider: FactoryProvider<IIngestOffersUseCase> = {
   provide: ingestOffersUseCaseToken,
-  inject: [offerConverterToken, getRepositoryToken(Offer)],
-  useFactory: (offerConverter, offerRepository) => {
+  inject: [offerConverterToken, getRepositoryToken(Offer), loggerToken],
+  useFactory: (offerConverter, offerRepository, logger) => {
     const offerProviderClients = {
       [OfferType.OFFER_ONE]: new OfferProviderOneClient(),
       [OfferType.OFFER_TWO]: new OfferProviderTwoClient(),
     };
-    return new IngestOffersUseCase(offerProviderClients, offerConverter, offerRepository);
+    return new IngestOffersUseCase(offerProviderClients, offerConverter, offerRepository, logger);
   },
 };
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Offer]), DatabaseModule],
+  imports: [TypeOrmModule.forFeature([Offer]), DatabaseModule, LoggerModule],
   providers: [offerConverterProvider, ingestOffersUseCaseProvider],
   exports: [ingestOffersUseCaseProvider],
 })
