@@ -1,4 +1,77 @@
-export const payload = {
+export type Offer2Payload = {
+  status: 'success' | 'error';
+  data: {
+    [key: string]: {
+      Offer: {
+        campaign_id: number;
+        store_id: null;
+        tracking_type: string;
+        campaign_vertical: string;
+        currency_name_singular: string;
+        currency_name_plural: string;
+        network_epc: string;
+        icon: string;
+        name: string;
+        tracking_url: string;
+        instructions: string;
+        disclaimer: null;
+        description: string;
+        short_description: string;
+        offer_sticker_text_1: string;
+        offer_sticker_text_2: null;
+        offer_sticker_text_3: null;
+        offer_sticker_color_1: string;
+        offer_sticker_color_2: string;
+        offer_sticker_color_3: string;
+        sort_order_setting: null;
+        category_1: string;
+        category_2: null;
+        amount: number;
+        payout_usd: number;
+        start_datetime: string;
+        end_datetime: string;
+        is_multi_reward: boolean;
+      };
+      Country: {
+        include: {
+          [key: string]: {
+            id: number;
+            code: string;
+            name: string;
+          };
+        };
+        exclude: string[];
+      };
+      State: {
+        include: string[];
+        exclude: string[];
+      };
+      City: {
+        include: string[];
+        exclude: string[];
+      };
+      Connection_Type: {
+        cellular: boolean;
+        wifi: boolean;
+      };
+      Device: {
+        include: string[];
+        exclude: string[];
+      };
+      OS: {
+        android: boolean;
+        ios: boolean;
+        web: boolean;
+        min_ios: null;
+        max_ios: null;
+        min_android: null;
+        max_android: null;
+      };
+    };
+  };
+};
+
+export const offer2Payload: Offer2Payload = {
   status: 'success',
   data: {
     // offers from offer2 provider
