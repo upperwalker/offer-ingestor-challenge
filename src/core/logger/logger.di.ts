@@ -1,1 +1,1 @@
-export const loggerToken = Symbol('Logger');
+export const loggerFactoryToken = Symbol('LoggerFactory');

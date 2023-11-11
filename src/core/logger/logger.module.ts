@@ -1,14 +1,14 @@
 import { ClassProvider, Module } from '@nestjs/common';
-import { loggerToken } from './logger.di';
-import { LoggerService } from './logger.service';
+import { loggerFactoryToken } from './logger.di';
+import { ContextedLoggerFactory } from './logger.factory';
 
-const loggerProvider: ClassProvider = {
-  provide: loggerToken,
-  useClass: LoggerService,
+const loggerFactoryProvider: ClassProvider = {
+  provide: loggerFactoryToken,
+  useClass: ContextedLoggerFactory,
 };
 
 @Module({
-  providers: [loggerProvider],
-  exports: [loggerProvider],
+  providers: [loggerFactoryProvider],
+  exports: [loggerFactoryProvider],
 })
 export class LoggerModule {}

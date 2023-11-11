@@ -18,6 +18,7 @@ export class OfferOnePayloadConverter implements IOfferConverterStrategy {
       const slug = offer?.offer_id ? `${offer.offer_id}-${OfferType.OFFER_ONE}` : '';
 
       return {
+        providerName: OfferType.OFFER_ONE,
         externalOfferId: offer?.offer_id,
         slug: slug,
         name: offer?.offer_name,

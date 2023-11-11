@@ -3,31 +3,32 @@ import { IOfferProviderClient } from '../../external-providers/offer/offer-provi
 import { OfferType } from '../offer-type.enum';
 import { IOffer } from '../entity/offer.entity';
 import { Repository } from 'typeorm';
-import { IContextedLogger } from '../../core/logger/logger.service';
+import { ILogger } from '../../core/logger/logger.factory';
+import { IOfferValidator } from '../validators/offer-validator';
 
 export interface IIngestOffersUseCase {
   execute(): Promise<void>;
 }
 
-export class IngestOffersUseCase {
+export class IngestOffersUseCase implements IIngestOffersUseCase {
   constructor(
     private readonly offerProviderClients: Record<OfferType, IOfferProviderClient>,
     private readonly offerConverter: IOfferConverter,
+    private readonly offerValidator: IOfferValidator,
     private readonly offerRepository: Repository<IOffer>,
-    private readonly logger: IContextedLogger,
-  ) {
-    this.logger.setContext(this.constructor.name);
-  }
+    private readonly logger: ILogger,
+  ) {}
 
   async execute() {
-    this.logger.info('About to ingest offers');
+    this.logger.log('About to ingest offers');
     await Promise.allSettled(
       Object.entries(this.offerProviderClients).map(async ([type, client]) => {
         const rawPayload = await client.fetchOffers();
         const convertedPayload = this.offerConverter.convert(type as OfferType, rawPayload);
-        await this.offerRepository.upsert(convertedPayload, ['slug']);
+        const validatedPayload = convertedPayload.filter((payload) => this.offerValidator.validate(payload));
+        await this.offerRepository.upsert(validatedPayload, ['slug']);
       }),
     );
-    this.logger.info('Offers ingestion completed');
+    this.logger.log('Offers ingestion completed');
   }
 }

@@ -12,8 +12,8 @@ export interface IOffer {
   isAndroid: number;
   isIos: number;
   offerUrlTemplate: string;
-  providerName?: OfferType;
-  externalOfferId?: string;
+  providerName: OfferType | null;
+  externalOfferId: string | null;
 }
 
 /**
@@ -67,9 +67,9 @@ export class Offer implements IOffer {
   // so for offer1 payload, this should be "offer1"
   // for offer2 payload, this should be "offer2"
   @Column({ type: 'varchar', length: 255, nullable: true, name: 'provider_name' })
-  providerName?: OfferType;
+  providerName: OfferType | null;
 
   // offer id from external provider
   @Column({ type: 'varchar', length: 255, name: 'external_offer_id', nullable: true })
-  externalOfferId?: string;
+  externalOfferId: string | null;
 }
