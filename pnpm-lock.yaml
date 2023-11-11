@@ -14,6 +14,9 @@ dependencies:
   '@nestjs/platform-express':
     specifier: ^10.0.0
     version: 10.2.8(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)
+  '@nestjs/typeorm':
+    specifier: ^10.0.0
+    version: 10.0.0(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)(reflect-metadata@0.1.13)(rxjs@7.8.1)(typeorm@0.3.17)
   class-validator:
     specifier: ^0.14.0
     version: 0.14.0
@@ -988,6 +991,23 @@ packages:
       '@nestjs/platform-express': 10.2.8(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)
       tslib: 2.6.2
     dev: true
+
+  /@nestjs/typeorm@10.0.0(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)(reflect-metadata@0.1.13)(rxjs@7.8.1)(typeorm@0.3.17):
+    resolution: {integrity: sha512-WQU4HCDTz4UavsFzvGUKDHqi0MO5K47yFoPXdmh+Z/hCNO7SHCMmV9jLiLukM8n5nKUqJ3jDqiljkWBcZPdCtA==}
+    peerDependencies:
+      '@nestjs/common': ^8.0.0 || ^9.0.0 || ^10.0.0
+      '@nestjs/core': ^8.0.0 || ^9.0.0 || ^10.0.0
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.2.0
+      typeorm: ^0.3.0
+    dependencies:
+      '@nestjs/common': 10.2.8(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.8.1)
+      '@nestjs/core': 10.2.8(@nestjs/common@10.2.8)(@nestjs/platform-express@10.2.8)(reflect-metadata@0.1.13)(rxjs@7.8.1)
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.1
+      typeorm: 0.3.17(ts-node@10.9.1)
+      uuid: 9.0.0
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -5307,6 +5327,11 @@ packages:
   /utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+
+  /uuid@9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
+    dev: false
 
   /uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}

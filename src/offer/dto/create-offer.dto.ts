@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsString, MaxLength, IsInt, Min, Max, IsOptional, IsEnum } from 'class-validator';
-import { IOffer, OfferTypeEnum } from '../entity/offer.entity';
+import { IOffer } from '../entity/offer.entity';
+import { OfferType } from '../offer-type.enum';
 
 export interface ICreateOfferDto extends Omit<IOffer, 'id'> {}
 
@@ -51,8 +52,8 @@ export class CreateOfferDto implements ICreateOfferDto {
   offerUrlTemplate: string;
 
   @IsOptional()
-  @IsEnum(OfferTypeEnum)
-  providerName?: OfferTypeEnum;
+  @IsEnum(OfferType)
+  providerName?: OfferType;
 
   @IsOptional()
   @IsString() // could be uuid, then consider using IsUUID()

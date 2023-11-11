@@ -1,9 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-
-export enum OfferTypeEnum {
-  Offer1 = 'offer1',
-  Offer2 = 'offer2',
-}
+import { OfferType } from '../offer-type.enum';
 
 export interface IOffer {
   id: number;
@@ -16,7 +12,7 @@ export interface IOffer {
   isAndroid: number;
   isIos: number;
   offerUrlTemplate: string;
-  providerName?: OfferTypeEnum;
+  providerName?: OfferType;
   externalOfferId?: string;
 }
 
@@ -71,7 +67,7 @@ export class Offer implements IOffer {
   // so for offer1 payload, this should be "offer1"
   // for offer2 payload, this should be "offer2"
   @Column({ type: 'varchar', length: 255, nullable: true, name: 'provider_name' })
-  providerName?: OfferTypeEnum;
+  providerName?: OfferType;
 
   // offer id from external provider
   @Column({ type: 'varchar', length: 255, name: 'external_offer_id', nullable: true })
