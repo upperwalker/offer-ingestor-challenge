@@ -5,6 +5,8 @@ import { IOffer } from '../entity/offer.entity';
 import { Repository } from 'typeorm';
 import { ILogger } from '../../core/logger/logger.factory';
 import { IOfferValidator } from '../validators/offer-validator';
+import { objectEntries } from '../../utils/object';
+import { CreateOfferDto } from '../dto/create-offer.dto';
 
 export interface IIngestOffersUseCase {
   execute(): Promise<void>;
@@ -22,13 +24,25 @@ export class IngestOffersUseCase implements IIngestOffersUseCase {
   async execute() {
     this.logger.log('About to ingest offers');
     await Promise.allSettled(
-      Object.entries(this.offerProviderClients).map(async ([type, client]) => {
+      objectEntries(this.offerProviderClients).map(async ([type, client]) => {
         const rawPayload = await client.fetchOffers();
-        const convertedPayload = this.offerConverter.convert(type as OfferType, rawPayload);
-        const validatedPayload = convertedPayload.filter((payload) => this.offerValidator.validate(payload));
+        const convertedPayload = this.offerConverter.convert(type, rawPayload);
+        const validatedPayload = convertedPayload
+          .map((payload) => this.offerValidator.validate(payload))
+          .filter((validated): validated is CreateOfferDto => validated != null);
+
         await this.offerRepository.upsert(validatedPayload, ['slug']);
       }),
-    );
-    this.logger.log('Offers ingestion completed');
+    )
+      .then((results) => {
+        const rejected = results.filter((result): result is PromiseRejectedResult => result.status === 'rejected');
+        if (rejected.length > 0) {
+          const errors = rejected.map(({ reason }) => reason?.message ?? 'unknown reason');
+          this.logger.warn(`Some ingestion actions were rejected with errors: ${errors}`);
+        }
+      })
+      .finally(() => {
+        this.logger.log('Offers ingestion completed');
+      });
   }
 }

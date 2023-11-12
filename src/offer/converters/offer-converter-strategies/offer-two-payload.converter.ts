@@ -5,7 +5,7 @@ import { IOfferConverterStrategy } from '../composed-offer-converter';
 
 export class OfferTwoPayloadConverter implements IOfferConverterStrategy {
   convert(payload: Offer2Payload): ICreateOfferDto[] {
-    const offers = payload.data;
+    const offers = payload?.data;
 
     if (offers == null || typeof offers !== 'object') {
       return [];

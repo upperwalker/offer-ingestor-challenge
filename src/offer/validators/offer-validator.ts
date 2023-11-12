@@ -7,7 +7,7 @@ export interface IOfferValidator {
   validate(payload: ICreateOfferDto): CreateOfferDto | null;
 }
 
-export class OfferValidator {
+export class OfferValidator implements IOfferValidator {
   constructor(private readonly logger: ILogger) {}
 
   validate(payload: ICreateOfferDto): CreateOfferDto | null {
