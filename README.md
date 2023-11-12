@@ -6,8 +6,8 @@ Offers ingestor challenge
 
 - I have added a few JSDoc todos which can be addressed later
 - I have considered using nest interceptors initially, but decided to isolate external providers requests from offers business domain for better scalability
-- I used in-memory database to simlify project setup
-- It took a bit longer that 2 hours, but I was free on Saturday :) 
+- I used in-memory database to simplify project setup
+- It took a bit longer than 2 hours, but I was free on Saturday :) 
 ## Installation
 
 ```bash

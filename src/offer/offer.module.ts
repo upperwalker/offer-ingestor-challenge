@@ -17,11 +17,11 @@ import { IOfferValidator, OfferValidator } from './validators/offer-validator';
 const offerConverterProvider: FactoryProvider<IOfferConverter> = {
   provide: offerConverterToken,
   useFactory: () => {
-    const offerConverterStategies = {
+    const offerConverterStrategies = {
       [OfferType.OFFER_ONE]: new OfferOnePayloadConverter(),
       [OfferType.OFFER_TWO]: new OfferTwoPayloadConverter(),
     };
-    return new ComposedOfferConverter(offerConverterStategies);
+    return new ComposedOfferConverter(offerConverterStrategies);
   },
 };
 

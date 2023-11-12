@@ -10,7 +10,7 @@ export class AppController {
    * @todo for demo purposes only
    * consider using nest command module to process job recurrently
    */
-  @Post()
+  @Post('/ingest-offers')
   @HttpCode(200)
   async ingestOffers(): Promise<void> {
     await this.ingestOffersUseCase.execute();
